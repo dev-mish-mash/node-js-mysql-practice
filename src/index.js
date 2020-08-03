@@ -3,6 +3,7 @@ const cors = require('@koa/cors');
 const koaBody = require('koa-body');
 const logger = require('koa-logger');
 const _router = require('koa-router');
+const sequelize = require('./db/models').sequelize;
 
 const run = async () => {
     const app = new Koa();
@@ -11,6 +12,7 @@ const run = async () => {
     app.use(logger);
     app.use(koaBody());
     app.use(_router.routes());
+    sequelize.sync();
 
     const port = 8000;
     const server = await app.listen(port);
